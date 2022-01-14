@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
-import nounou.commun.dto.DtoCategorie;
+import nounou.commun.dto.DtoAgrement;
 import nounou.commun.dto.DtoCompte;
-import nounou.commun.dto.DtoPersonne;
+import nounou.commun.dto.DtoPersonnel;
 import nounou.commun.dto.DtoTelephone;
 import nounou.jsf.data.Categorie;
 import nounou.jsf.data.Compte;
@@ -15,7 +15,7 @@ import nounou.jsf.data.Telephone;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-01-10T12:59:55+0100",
+    date = "2022-01-13T21:25:18+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1300.v20210419-1022, environment: Java 15.0.2 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -29,10 +29,10 @@ public class IMapperImpl implements IMapper {
 
         Compte compte = new Compte();
 
-        compte.setId( source.getId() );
-        compte.setPseudo( source.getPseudo() );
-        compte.setMotDePasse( source.getMotDePasse() );
         compte.setEmail( source.getEmail() );
+        compte.setId( source.getId() );
+        compte.setMotDePasse( source.getMotDePasse() );
+        compte.setPseudo( source.getPseudo() );
         List<String> list = source.getRoles();
         if ( list != null ) {
             compte.setRoles( new ArrayList<String>( list ) );
@@ -71,10 +71,10 @@ public class IMapperImpl implements IMapper {
 
         Compte compte = new Compte();
 
-        compte.setId( source.getId() );
-        compte.setPseudo( source.getPseudo() );
-        compte.setMotDePasse( source.getMotDePasse() );
         compte.setEmail( source.getEmail() );
+        compte.setId( source.getId() );
+        compte.setMotDePasse( source.getMotDePasse() );
+        compte.setPseudo( source.getPseudo() );
         List<String> list = source.getRoles();
         if ( list != null ) {
             compte.setRoles( new ArrayList<String>( list ) );
@@ -89,10 +89,10 @@ public class IMapperImpl implements IMapper {
             return null;
         }
 
-        target.setId( source.getId() );
-        target.setPseudo( source.getPseudo() );
-        target.setMotDePasse( source.getMotDePasse() );
         target.setEmail( source.getEmail() );
+        target.setId( source.getId() );
+        target.setMotDePasse( source.getMotDePasse() );
+        target.setPseudo( source.getPseudo() );
         if ( target.getRoles() != null ) {
             List<String> list = source.getRoles();
             if ( list != null ) {
@@ -114,7 +114,7 @@ public class IMapperImpl implements IMapper {
     }
 
     @Override
-    public Categorie map(DtoCategorie source) {
+    public Categorie map(DtoAgrement source) {
         if ( source == null ) {
             return null;
         }
@@ -128,19 +128,19 @@ public class IMapperImpl implements IMapper {
     }
 
     @Override
-    public DtoCategorie map(Categorie source) {
+    public DtoAgrement map(Categorie source) {
         if ( source == null ) {
             return null;
         }
 
-        DtoCategorie dtoCategorie = new DtoCategorie();
+        DtoAgrement dtoAgrement = new DtoAgrement();
 
         if ( source.getId() != null ) {
-            dtoCategorie.setId( source.getId() );
+            dtoAgrement.setId( source.getId() );
         }
-        dtoCategorie.setLibelle( source.getLibelle() );
+        dtoAgrement.setLibelle( source.getLibelle() );
 
-        return dtoCategorie;
+        return dtoAgrement;
     }
 
     @Override
@@ -158,7 +158,7 @@ public class IMapperImpl implements IMapper {
     }
 
     @Override
-    public Personne map(DtoPersonne source) {
+    public Personne map(DtoPersonnel source) {
         if ( source == null ) {
             return null;
         }
@@ -168,29 +168,25 @@ public class IMapperImpl implements IMapper {
         personne.setId( source.getId() );
         personne.setNom( source.getNom() );
         personne.setPrenom( source.getPrenom() );
-        personne.setCategorie( map( source.getCategorie() ) );
-        personne.setTelephones( dtoTelephoneListToTelephoneList( source.getTelephones() ) );
 
         return personne;
     }
 
     @Override
-    public DtoPersonne map(Personne source) {
+    public DtoPersonnel map(Personne source) {
         if ( source == null ) {
             return null;
         }
 
-        DtoPersonne dtoPersonne = new DtoPersonne();
+        DtoPersonnel dtoPersonnel = new DtoPersonnel();
 
-        dtoPersonne.setCategorie( map( source.getCategorie() ) );
         if ( source.getId() != null ) {
-            dtoPersonne.setId( source.getId() );
+            dtoPersonnel.setId( source.getId() );
         }
-        dtoPersonne.setNom( source.getNom() );
-        dtoPersonne.setPrenom( source.getPrenom() );
-        dtoPersonne.setTelephones( telephoneListToDtoTelephoneList( source.getTelephones() ) );
+        dtoPersonnel.setNom( source.getNom() );
+        dtoPersonnel.setPrenom( source.getPrenom() );
 
-        return dtoPersonne;
+        return dtoPersonnel;
     }
 
     @Override
@@ -201,10 +197,10 @@ public class IMapperImpl implements IMapper {
 
         Personne personne = new Personne();
 
+        personne.setCategorie( duplicate( source.getCategorie() ) );
         personne.setId( source.getId() );
         personne.setNom( source.getNom() );
         personne.setPrenom( source.getPrenom() );
-        personne.setCategorie( duplicate( source.getCategorie() ) );
         personne.setTelephones( duplicate( source.getTelephones() ) );
 
         return personne;
@@ -269,31 +265,5 @@ public class IMapperImpl implements IMapper {
         }
 
         return list;
-    }
-
-    protected List<Telephone> dtoTelephoneListToTelephoneList(List<DtoTelephone> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Telephone> list1 = new ArrayList<Telephone>( list.size() );
-        for ( DtoTelephone dtoTelephone : list ) {
-            list1.add( map( dtoTelephone ) );
-        }
-
-        return list1;
-    }
-
-    protected List<DtoTelephone> telephoneListToDtoTelephoneList(List<Telephone> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<DtoTelephone> list1 = new ArrayList<DtoTelephone>( list.size() );
-        for ( Telephone telephone : list ) {
-            list1.add( map( telephone ) );
-        }
-
-        return list1;
     }
 }

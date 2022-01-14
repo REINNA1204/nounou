@@ -1,8 +1,8 @@
 package nounou.ejb.service.standard;
 
+import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
 import static nounou.commun.dto.Roles.ADMINISTRATEUR;
 import static nounou.commun.dto.Roles.UTILISATEUR;
-import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,36 +13,35 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.inject.Inject;
 
-import nounou.commun.dto.DtoPersonne;
-import nounou.commun.dto.DtoTelephone;
+import nounou.commun.dto.DtoPersonnel;
 import nounou.commun.exception.ExceptionValidation;
-import nounou.commun.service.IServicePersonne;
-import nounou.ejb.dao.IDaoPersonne;
-import nounou.ejb.data.Personne;
+import nounou.commun.service.IServicePersonnel;
+import nounou.ejb.dao.IDaoPersonnel;
+import nounou.ejb.data.Personnel;
 import nounou.ejb.data.mapper.IMapperEjb;
 
 @Stateless
 @Remote
 @RolesAllowed({ ADMINISTRATEUR, UTILISATEUR })
-public class ServicePersonne implements IServicePersonne {
+public class ServicePersonnel implements IServicePersonnel {
 
 	// Champs
 	@Inject
 	private IMapperEjb mapper;
 	@Inject
-	private IDaoPersonne daoPersonne;
+	private IDaoPersonnel daoPersonne;
 
 	// Actions
 
 	@Override
-	public int inserer(DtoPersonne dtoPersonne) throws ExceptionValidation {
+	public int inserer(DtoPersonnel dtoPersonne) throws ExceptionValidation {
 		verifierValiditeDonnees(dtoPersonne);
 		int id = daoPersonne.inserer(mapper.map(dtoPersonne));
 		return id;
 	}
 
 	@Override
-	public void modifier(DtoPersonne dtoPersonne) throws ExceptionValidation {
+	public void modifier(DtoPersonnel dtoPersonne) throws ExceptionValidation {
 		verifierValiditeDonnees(dtoPersonne);
 		daoPersonne.modifier(mapper.map(dtoPersonne));
 	}
@@ -54,17 +53,17 @@ public class ServicePersonne implements IServicePersonne {
 
 	@Override
 	@TransactionAttribute(NOT_SUPPORTED)
-	public DtoPersonne retrouver(int idPersonne) {
-		Personne personne = daoPersonne.retrouver(idPersonne);
+	public DtoPersonnel retrouver(int idPersonne) {
+		Personnel personne = daoPersonne.retrouver(idPersonne);
 		return mapper.map(personne);
 
 	}
 
 	@Override
 	@TransactionAttribute(NOT_SUPPORTED)
-	public List<DtoPersonne> listerTout() {
-		List<DtoPersonne> liste = new ArrayList<>();
-		for (Personne personne : daoPersonne.listerTout()) {
+	public List<DtoPersonnel> listerTout() {
+		List<DtoPersonnel> liste = new ArrayList<>();
+		for (Personnel personne : daoPersonne.listerTout()) {
 			liste.add( mapper.mapMinimal(personne) );
 		}
 		return liste;
@@ -72,7 +71,7 @@ public class ServicePersonne implements IServicePersonne {
 
 	// Méthodes auxiliaires
 
-	private void verifierValiditeDonnees(DtoPersonne dtoPersonne) throws ExceptionValidation {
+	private void verifierValiditeDonnees(DtoPersonnel dtoPersonne) throws ExceptionValidation {
 
 		StringBuilder message = new StringBuilder();
 
@@ -86,20 +85,6 @@ public class ServicePersonne implements IServicePersonne {
 			message.append("\nLe prénom est absent.");
 		} else if (dtoPersonne.getPrenom().length() > 25) {
 			message.append("\nLe prénom est trop long.");
-		}
-
-		for (DtoTelephone telephoe : dtoPersonne.getTelephones()) {
-			if (telephoe.getLibelle() == null || telephoe.getLibelle().isEmpty()) {
-				message.append("\nLlibellé absent pour le téléphone : " + telephoe.getNumero());
-			} else if (telephoe.getLibelle().length() > 25) {
-				message.append("\nLe libellé du téléphone est trop long : " + telephoe.getLibelle());
-			}
-
-			if (telephoe.getNumero() == null || telephoe.getNumero().isEmpty()) {
-				message.append("\nNuméro absent pour le téléphone : " + telephoe.getLibelle());
-			} else if (telephoe.getNumero().length() > 25) {
-				message.append("\nLe numéro du téléphone est trop long : " + telephoe.getNumero());
-			}
 		}
 
 		if (message.length() > 0) {

@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
-import nounou.commun.dto.DtoCategorie;
+import nounou.commun.dto.DtoAgrement;
 import nounou.commun.dto.DtoCompte;
-import nounou.commun.dto.DtoPersonne;
-import nounou.commun.dto.DtoTelephone;
-import nounou.ejb.data.Categorie;
+import nounou.commun.dto.DtoPersonnel;
+import nounou.ejb.data.Agrement;
 import nounou.ejb.data.Compte;
-import nounou.ejb.data.Personne;
-import nounou.ejb.data.Telephone;
+import nounou.ejb.data.Personnel;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-01-10T12:59:54+0100",
+    date = "2022-01-13T21:25:18+0100",
     comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 1.3.1300.v20210419-1022, environment: Java 15.0.2 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -29,10 +27,10 @@ public class IMapperEjbImpl implements IMapperEjb {
 
         Compte compte = new Compte();
 
-        compte.setId( source.getId() );
-        compte.setPseudo( source.getPseudo() );
-        compte.setMotDePasse( source.getMotDePasse() );
         compte.setEmail( source.getEmail() );
+        compte.setId( source.getId() );
+        compte.setMotDePasse( source.getMotDePasse() );
+        compte.setPseudo( source.getPseudo() );
         List<String> list = source.getRoles();
         if ( list != null ) {
             compte.setRoles( new ArrayList<String>( list ) );
@@ -62,137 +60,83 @@ public class IMapperEjbImpl implements IMapperEjb {
     }
 
     @Override
-    public Categorie map(DtoCategorie source) {
+    public Agrement map(DtoAgrement source) {
         if ( source == null ) {
             return null;
         }
 
-        Categorie categorie = new Categorie();
+        Agrement agrement = new Agrement();
 
-        categorie.setId( source.getId() );
-        categorie.setLibelle( source.getLibelle() );
+        agrement.setId( source.getId() );
+        agrement.setLibelle( source.getLibelle() );
 
-        return categorie;
+        return agrement;
     }
 
     @Override
-    public DtoCategorie map(Categorie source) {
+    public DtoAgrement map(Agrement source) {
         if ( source == null ) {
             return null;
         }
 
-        DtoCategorie dtoCategorie = new DtoCategorie();
+        DtoAgrement dtoAgrement = new DtoAgrement();
 
-        dtoCategorie.setId( source.getId() );
-        dtoCategorie.setLibelle( source.getLibelle() );
+        dtoAgrement.setId( source.getId() );
+        dtoAgrement.setLibelle( source.getLibelle() );
 
-        return dtoCategorie;
+        return dtoAgrement;
     }
 
     @Override
-    public Personne map(DtoPersonne source) {
+    public Personnel map(DtoPersonnel source) {
         if ( source == null ) {
             return null;
         }
 
-        Personne personne = new Personne();
+        Personnel personnel = new Personnel();
 
-        personne.setId( source.getId() );
-        personne.setNom( source.getNom() );
-        personne.setPrenom( source.getPrenom() );
-        personne.setCategorie( map( source.getCategorie() ) );
-        personne.setTelephones( dtoTelephoneListToTelephoneList( source.getTelephones() ) );
+        personnel.setAdresse( source.getAdresse() );
+        personnel.setAgrement( map( source.getAgrement() ) );
+        personnel.setId( source.getId() );
+        personnel.setNom( source.getNom() );
+        personnel.setPrenom( source.getPrenom() );
+        personnel.setTelephone( source.getTelephone() );
 
-        addBackReference( personne );
-
-        return personne;
+        return personnel;
     }
 
     @Override
-    public DtoPersonne map(Personne source) {
+    public DtoPersonnel map(Personnel source) {
         if ( source == null ) {
             return null;
         }
 
-        DtoPersonne dtoPersonne = new DtoPersonne();
+        DtoPersonnel dtoPersonnel = new DtoPersonnel();
 
-        dtoPersonne.setCategorie( map( source.getCategorie() ) );
-        dtoPersonne.setId( source.getId() );
-        dtoPersonne.setNom( source.getNom() );
-        dtoPersonne.setPrenom( source.getPrenom() );
-        dtoPersonne.setTelephones( telephoneListToDtoTelephoneList( source.getTelephones() ) );
+        dtoPersonnel.setAdresse( source.getAdresse() );
+        dtoPersonnel.setAgrement( map( source.getAgrement() ) );
+        dtoPersonnel.setId( source.getId() );
+        dtoPersonnel.setNom( source.getNom() );
+        dtoPersonnel.setPrenom( source.getPrenom() );
+        dtoPersonnel.setTelephone( source.getTelephone() );
 
-        return dtoPersonne;
+        return dtoPersonnel;
     }
 
     @Override
-    public DtoPersonne mapMinimal(Personne source) {
+    public DtoPersonnel mapMinimal(Personnel source) {
         if ( source == null ) {
             return null;
         }
 
-        DtoPersonne dtoPersonne = new DtoPersonne();
+        DtoPersonnel dtoPersonnel = new DtoPersonnel();
 
-        dtoPersonne.setId( source.getId() );
-        dtoPersonne.setNom( source.getNom() );
-        dtoPersonne.setPrenom( source.getPrenom() );
+        dtoPersonnel.setAdresse( source.getAdresse() );
+        dtoPersonnel.setId( source.getId() );
+        dtoPersonnel.setNom( source.getNom() );
+        dtoPersonnel.setPrenom( source.getPrenom() );
+        dtoPersonnel.setTelephone( source.getTelephone() );
 
-        return dtoPersonne;
-    }
-
-    @Override
-    public Telephone map(DtoTelephone source) {
-        if ( source == null ) {
-            return null;
-        }
-
-        Telephone telephone = new Telephone();
-
-        telephone.setId( source.getId() );
-        telephone.setLibelle( source.getLibelle() );
-        telephone.setNumero( source.getNumero() );
-
-        return telephone;
-    }
-
-    @Override
-    public DtoTelephone map(Telephone source) {
-        if ( source == null ) {
-            return null;
-        }
-
-        DtoTelephone dtoTelephone = new DtoTelephone();
-
-        dtoTelephone.setId( source.getId() );
-        dtoTelephone.setLibelle( source.getLibelle() );
-        dtoTelephone.setNumero( source.getNumero() );
-
-        return dtoTelephone;
-    }
-
-    protected List<Telephone> dtoTelephoneListToTelephoneList(List<DtoTelephone> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Telephone> list1 = new ArrayList<Telephone>( list.size() );
-        for ( DtoTelephone dtoTelephone : list ) {
-            list1.add( map( dtoTelephone ) );
-        }
-
-        return list1;
-    }
-
-    protected List<DtoTelephone> telephoneListToDtoTelephoneList(List<Telephone> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<DtoTelephone> list1 = new ArrayList<DtoTelephone>( list.size() );
-        for ( Telephone telephone : list ) {
-            list1.add( map( telephone ) );
-        }
-
-        return list1;
+        return dtoPersonnel;
     }
 }

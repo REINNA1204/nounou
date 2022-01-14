@@ -13,38 +13,38 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.inject.Inject;
 
-import nounou.commun.dto.DtoCategorie;
+import nounou.commun.dto.DtoAgrement;
 import nounou.commun.exception.ExceptionValidation;
-import nounou.commun.service.IServiceCategorie;
-import nounou.ejb.dao.IDaoCategorie;
-import nounou.ejb.dao.IDaoPersonne;
-import nounou.ejb.data.Categorie;
+import nounou.commun.service.IServiceAgrement;
+import nounou.ejb.dao.IDaoAgrement;
+import nounou.ejb.dao.IDaoPersonnel;
+import nounou.ejb.data.Agrement;
 import nounou.ejb.data.mapper.IMapperEjb;
 
 @Stateless
 @Remote
 @RolesAllowed(ADMINISTRATEUR)
-public class ServiceCategorie implements IServiceCategorie {
+public class ServiceAgrement implements IServiceAgrement {
 
 	// Champs
 	@Inject
 	private IMapperEjb mapper;
 	@Inject
-	private IDaoCategorie daoCategorie;
+	private IDaoAgrement daoCategorie;
 	@Inject
-	private IDaoPersonne daoPersonne;
+	private IDaoPersonnel daoPersonne;
 
 	// Actions
 
 	@Override
-	public int inserer(DtoCategorie dtoCategorie) throws ExceptionValidation {
+	public int inserer(DtoAgrement dtoCategorie) throws ExceptionValidation {
 		verifierValiditeDonnees(dtoCategorie);
 		int id = daoCategorie.inserer(mapper.map(dtoCategorie));
 		return id;
 	}
 
 	@Override
-	public void modifier(DtoCategorie dtoCategorie) throws ExceptionValidation {
+	public void modifier(DtoAgrement dtoCategorie) throws ExceptionValidation {
 		verifierValiditeDonnees(dtoCategorie);
 		daoCategorie.modifier(mapper.map(dtoCategorie));
 	}
@@ -60,16 +60,16 @@ public class ServiceCategorie implements IServiceCategorie {
 	@Override
 	@RolesAllowed({ ADMINISTRATEUR, UTILISATEUR })
 	@TransactionAttribute(NOT_SUPPORTED)
-	public DtoCategorie retrouver(int idCategorie) {
+	public DtoAgrement retrouver(int idCategorie) {
 		return mapper.map(daoCategorie.retrouver(idCategorie));
 	}
 
 	@Override
 	@RolesAllowed({ ADMINISTRATEUR, UTILISATEUR })
 	@TransactionAttribute(NOT_SUPPORTED)
-	public List<DtoCategorie> listerTout() {
-		List<DtoCategorie> liste = new ArrayList<>();
-		for (Categorie categorie : daoCategorie.listerTout()) {
+	public List<DtoAgrement> listerTout() {
+		List<DtoAgrement> liste = new ArrayList<>();
+		for (Agrement categorie : daoCategorie.listerTout()) {
 			liste.add(mapper.map(categorie));
 		}
 		return liste;
@@ -77,7 +77,7 @@ public class ServiceCategorie implements IServiceCategorie {
 
 	// Méthodes auxiliaires
 
-	private void verifierValiditeDonnees(DtoCategorie dtoCategorie) throws ExceptionValidation {
+	private void verifierValiditeDonnees(DtoAgrement dtoCategorie) throws ExceptionValidation {
 
 		StringBuilder message = new StringBuilder();
 

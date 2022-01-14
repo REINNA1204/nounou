@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 @SuppressWarnings("serial")
-public class DtoCategorie implements Serializable {
+public class DtoAgrement implements Serializable {
     
     // Champs
     
@@ -14,11 +14,11 @@ public class DtoCategorie implements Serializable {
 	
 	// Constructeurs
     
-    public DtoCategorie() {
+    public DtoAgrement() {
 		super();
 	}
     
-    public DtoCategorie(int id, String libelle) {
+    public DtoAgrement(int id, String libelle) {
 		super();
 		this.id = id;
 		this.libelle = libelle;

@@ -2,18 +2,18 @@ package nounou.ejb.dao;
 
 import java.util.List;
 
-import nounou.ejb.data.Personne;
+import nounou.ejb.data.Personnel;
 import nounou.ejb.data.Telephone;
 
 
 public interface IDaoTelephone {
 
-	void insererPourPersonne(Personne personne);
+	void insererPourPersonne(Personnel personne);
 
-	void modifierPourPersonne(Personne personne);
+	void modifierPourPersonne(Personnel personne);
 
 	void supprimerPourPersonne(int idPersonne);
 
-	List<Telephone> listerPourPersonne( Personne personne );
+	List<Telephone> listerPourPersonne( Personnel personne );
 
 }

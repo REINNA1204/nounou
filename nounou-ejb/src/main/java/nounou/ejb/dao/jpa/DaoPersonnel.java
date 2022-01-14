@@ -12,14 +12,14 @@ import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import nounou.ejb.dao.IDaoPersonne;
-import nounou.ejb.data.Personne;
+import nounou.ejb.dao.IDaoPersonnel;
+import nounou.ejb.data.Personnel;
 
 
 @Stateless
 @Local
 @TransactionAttribute( MANDATORY )
-public class DaoPersonne implements IDaoPersonne {
+public class DaoPersonnel implements IDaoPersonnel {
 	
 	// Champs
 	
@@ -30,14 +30,14 @@ public class DaoPersonne implements IDaoPersonne {
 	// Actions
 	
 	@Override
-	public int inserer(Personne personne) {
+	public int inserer(Personnel personne) {
 		em.persist(personne);
 		em.flush();
 		return personne.getId();
 	}
 
 	@Override
-	public void modifier(Personne personne) {
+	public void modifier(Personnel personne) {
 		em.merge( personne );
 	}
 
@@ -48,21 +48,21 @@ public class DaoPersonne implements IDaoPersonne {
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public Personne retrouver(int idPersonne) {
-		var graph = em.createEntityGraph( Personne.class );
+	public Personnel retrouver(int idPersonne) {
+		var graph = em.createEntityGraph( Personnel.class );
 		graph.addAttributeNodes( "categorie" );
 		graph.addAttributeNodes( "telephones" );
 		var props = new HashMap<String, Object>();
 		props.put( "javax.persistence.loadgraph", graph );
-		return em.find( Personne.class, idPersonne, props );
+		return em.find( Personnel.class, idPersonne, props );
 	}
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public List<Personne> listerTout() {
+	public List<Personnel> listerTout() {
 		em.clear();
 		var jpql = "SELECT p FROM Personne p ORDER BY p.nom, p.prenom";
-		var query = em.createQuery( jpql, Personne.class );
+		var query = em.createQuery( jpql, Personnel.class );
 		return query.getResultList();
 	}
 

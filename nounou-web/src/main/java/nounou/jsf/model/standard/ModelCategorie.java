@@ -9,9 +9,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nounou.commun.dto.DtoCategorie;
+import nounou.commun.dto.DtoAgrement;
 import nounou.commun.exception.ExceptionValidation;
-import nounou.commun.service.IServiceCategorie;
+import nounou.commun.service.IServiceAgrement;
 import nounou.jsf.data.Categorie;
 import nounou.jsf.data.mapper.IMapper;
 import nounou.jsf.util.UtilJsf;
@@ -30,7 +30,7 @@ public class ModelCategorie implements Serializable {
 	private Categorie			courant;
 	
 	@EJB
-	private IServiceCategorie	serviceCategorie;
+	private IServiceAgrement	serviceCategorie;
 	
 	@Inject
 	private IMapper				mapper;
@@ -41,7 +41,7 @@ public class ModelCategorie implements Serializable {
 	public List<Categorie> getListe() {
 		if ( liste == null ) {
 			liste = new ArrayList<>();
-			for ( DtoCategorie dto : serviceCategorie.listerTout() ) {
+			for ( DtoAgrement dto : serviceCategorie.listerTout() ) {
 				liste.add( mapper.map( dto ) );
 			}
 		}
@@ -60,7 +60,7 @@ public class ModelCategorie implements Serializable {
 	
 	public String actualiserCourant() {
 		if ( courant != null ) {
-			DtoCategorie dto = serviceCategorie.retrouver( courant.getId() ); 
+			DtoAgrement dto = serviceCategorie.retrouver( courant.getId() ); 
 			if ( dto == null ) {
 				UtilJsf.messageError( "La catégorie demandée n'existe pas" );
 				return "liste";

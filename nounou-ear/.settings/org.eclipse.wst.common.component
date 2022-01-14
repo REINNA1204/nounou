@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-        
+            
+    
     <wb-module deploy-name="nounou">
-                
+                        
+        
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
-                
+                        
+        
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
         <dependent-module archiveName="nounou-ejb.jar" deploy-path="/" handle="module:/resource/nounou-ejb/nounou-ejb">
             <dependency-type>uses</dependency-type>
@@ -17,7 +20,9 @@
         <dependent-module archiveName="nounou-commun.jar" deploy-path="/lib" handle="module:/resource/nounou-commun/nounou-commun">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-            
-    </wb-module>
+                    
     
+    </wb-module>
+        
+
 </project-modules>

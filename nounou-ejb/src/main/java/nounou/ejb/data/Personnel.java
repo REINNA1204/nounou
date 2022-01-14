@@ -1,11 +1,8 @@
 package nounou.ejb.data;
 
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,14 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
-@Table( name = "personne"  )
-public class Personne {
+@Table( name = "personnel"  )
+public class Personnel {
 	
 	
 	// Champs
@@ -36,25 +32,37 @@ public class Personne {
 	@Column( name = "prenom" )
 	private String			prenom;
 	
+	@Column( name = "telephone" )
+	private String			telephone;
+	
+	@Column( name = "adresse" )
+	private String			adresse;
+	
 	@ManyToOne( fetch = FetchType.LAZY )
-	@JoinColumn( name = "idcategorie" )
-	private Categorie		categorie;
+	@JoinColumn( name = "idagrement" )
+	private Agrement		agrement;
 
-	@OneToMany( mappedBy = "personne", cascade = ALL, orphanRemoval = true  )
-	@OrderBy( "libelle" )
-	private List<Telephone>	telephones = new ArrayList<>();
+	@OneToOne( cascade = CascadeType.ALL ) 
+    @JoinColumn( name="idcompte" )
+    private Compte compte;
+	
+//	@OneToMany( mappedBy = "personne", cascade = ALL, orphanRemoval = true  )
+//	@OrderBy( "libelle" )
+//	private List<Telephone>	telephones = new ArrayList<>();
 	
 	
 	// Constructeurs
 	
-	public Personne() {
+	public Personnel() {
 	}
 
-	public Personne(int id, String nom, String prenom, Categorie categorie ) {
+	public Personnel(int id, String nom, String prenom, String telephone, String adresse, Agrement agrement ) {
 		setId(id);
 		setNom(nom);
 		setPrenom(prenom);
-		setCategorie(categorie);
+		setTelephone(telephone);
+		setAdresse(adresse);
+		setAgrement(agrement);
 	}
 	
 	
@@ -84,32 +92,40 @@ public class Personne {
 		this.prenom = prenom;
 	}
 
-	public Categorie getCategorie() {
-		return categorie;
+	public Agrement getAgrement() {
+		return agrement;
 	}
 
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
+	public void setAgrement(Agrement agrement) {
+		this.agrement = agrement;
 	}
 
-	public List<Telephone> getTelephones() {
-		return telephones;
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setTelephones(List<Telephone> telephones) {
-		this.telephones = telephones;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public Compte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(Compte compte) {
+		this.compte = compte;
 	}
 
 	
 	// Actions
-	
-	public void ajouterTelephone( Telephone telephone ) {
-		telephones.add( telephone );
-	}
-	
-	public void retirerTelephone( Telephone telephone ) {
-		telephones.remove(telephone);
-	}
 	
 	
 	// hashcode() + equals()
@@ -130,7 +146,7 @@ public class Personne {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Personne other = (Personne) obj;
+		Personnel other = (Personnel) obj;
 		if (id != other.id)
 			return false;
 		return true;

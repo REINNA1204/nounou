@@ -24,7 +24,7 @@ public class Telephone {
 	
 	@ManyToOne
 	@JoinColumn( name = "idpersonne" )
-	private Personne		personne;
+	private Personnel		personne;
 
 	@Column( name = "libelle" )
 	private String			libelle;
@@ -38,7 +38,7 @@ public class Telephone {
 	public Telephone() {
 	}
 	
-	public Telephone(int id, Personne personne, String libelle, String numero) {
+	public Telephone(int id, Personnel personne, String libelle, String numero) {
 		this.id = id;
 		this.personne = personne;
 		this.libelle = libelle;
@@ -56,11 +56,11 @@ public class Telephone {
 		this.id = id;
 	}
 
-	public Personne getPersonne() {
+	public Personnel getPersonne() {
 		return personne;
 	}
 
-	public void setPersonne(Personne personne) {
+	public void setPersonne(Personnel personne) {
 		this.personne = personne;
 	}
 

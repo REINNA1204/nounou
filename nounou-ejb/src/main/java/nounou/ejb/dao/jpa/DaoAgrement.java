@@ -11,14 +11,14 @@ import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import nounou.ejb.dao.IDaoCategorie;
-import nounou.ejb.data.Categorie;
+import nounou.ejb.dao.IDaoAgrement;
+import nounou.ejb.data.Agrement;
 
 
 @Stateless
 @Local
 @TransactionAttribute( MANDATORY )
-public class DaoCategorie implements IDaoCategorie {
+public class DaoAgrement implements IDaoAgrement {
 
 	
 	// Champs
@@ -30,14 +30,14 @@ public class DaoCategorie implements IDaoCategorie {
 	// Actions
 	
 	@Override
-	public int inserer(Categorie categorie) {
+	public int inserer(Agrement categorie) {
 		em.persist(categorie);
 		em.flush();
 		return categorie.getId();
 	}
 
 	@Override
-	public void modifier(Categorie categorie) {
+	public void modifier(Agrement categorie) {
 		em.merge( categorie );
 	}
 
@@ -48,16 +48,16 @@ public class DaoCategorie implements IDaoCategorie {
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public Categorie retrouver(int idCategorie) {
-		return em.find( Categorie.class, idCategorie );
+	public Agrement retrouver(int idCategorie) {
+		return em.find( Agrement.class, idCategorie );
 	}
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public List<Categorie> listerTout() {
+	public List<Agrement> listerTout() {
 		em.clear();
 		var jpql = "SELECT c FROM Categorie c ORDER BY c.libelle";
-		var query = em.createQuery( jpql, Categorie.class );
+		var query = em.createQuery( jpql, Agrement.class );
 		return query.getResultList();
 	}
 	

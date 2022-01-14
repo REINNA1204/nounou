@@ -9,9 +9,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nounou.commun.dto.DtoPersonne;
+import nounou.commun.dto.DtoPersonnel;
 import nounou.commun.exception.ExceptionValidation;
-import nounou.commun.service.IServicePersonne;
+import nounou.commun.service.IServicePersonnel;
 import nounou.jsf.data.Personne;
 import nounou.jsf.data.Telephone;
 import nounou.jsf.data.mapper.IMapper;
@@ -31,7 +31,7 @@ public class ModelPersonne implements Serializable {
 	private Personne			courant;
 	
 	@EJB
-	private IServicePersonne	servicePersonne;
+	private IServicePersonnel	servicePersonne;
 
 	@Inject
 	private IMapper				mapper;
@@ -42,7 +42,7 @@ public class ModelPersonne implements Serializable {
 	public List<Personne> getListe() {
 		if ( liste == null ) {
 			liste = new ArrayList<>();
-			for ( DtoPersonne dto : servicePersonne.listerTout() ) {
+			for ( DtoPersonnel dto : servicePersonne.listerTout() ) {
 				liste.add( mapper.map( dto ) );
 			}
 		}
@@ -61,7 +61,7 @@ public class ModelPersonne implements Serializable {
 	
 	public String actualiserCourant() {
 		if ( courant != null ) {
-			DtoPersonne dto = servicePersonne.retrouver( courant.getId() ); 
+			DtoPersonnel dto = servicePersonne.retrouver( courant.getId() ); 
 			if ( dto == null ) {
 				UtilJsf.messageError( "La personne demandée n'existe pas" );
 				return "liste";

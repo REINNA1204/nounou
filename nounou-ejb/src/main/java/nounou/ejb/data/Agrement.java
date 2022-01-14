@@ -9,31 +9,35 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table( name = "categorie" )
-public class Categorie {
+@Table( name = "agrement" )
+public class Agrement {
     
 	
     // Champs
     
 	@Id
 	@GeneratedValue( strategy = IDENTITY )
-	@Column( name = "idcategorie" )
+	@Column( name = "idagrement" )
     private int         	id;
     
 	@Column( name = "libelle" )
     private String      	libelle;
 	
+	@Column( name = "nombremaxenfants" )
+    private int      	nombremaxenfants;
+	
 	
 	// Constructeurs
 
-	public Categorie() {
+	public Agrement() {
 		super();
 	}
     
-    public Categorie(int id, String libelle) {
+    public Agrement(int id, String libelle, int nombremaxenfants) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
+		this.nombremaxenfants = nombremaxenfants;
 	}
     
     
@@ -53,10 +57,17 @@ public class Categorie {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
-    }
+    } 
     
-    
-    // soString()
+    public int getNombremaxenfants() {
+		return nombremaxenfants;
+	}
+
+	public void setNombremaxenfants(int nombremaxenfants) {
+		this.nombremaxenfants = nombremaxenfants;
+	}
+
+	// soString()
     @Override
     public String toString() {
     	return libelle;
@@ -81,7 +92,7 @@ public class Categorie {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorie other = (Categorie) obj;
+		Agrement other = (Agrement) obj;
 		if (id != other.id)
 			return false;
 		return true;

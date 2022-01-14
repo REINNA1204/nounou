@@ -1,19 +1,15 @@
 package nounou.ejb.data.mapper;
 
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-import nounou.commun.dto.DtoCategorie;
+import nounou.commun.dto.DtoAgrement;
 import nounou.commun.dto.DtoCompte;
-import nounou.commun.dto.DtoPersonne;
-import nounou.commun.dto.DtoTelephone;
-import nounou.ejb.data.Categorie;
+import nounou.commun.dto.DtoPersonnel;
+import nounou.ejb.data.Agrement;
 import nounou.ejb.data.Compte;
-import nounou.ejb.data.Personne;
-import nounou.ejb.data.Telephone;
+import nounou.ejb.data.Personnel;
 
  
 @Mapper( componentModel = "cdi" )
@@ -31,37 +27,37 @@ public interface IMapperEjb {
 	
 	// Categorie
 	
-	Categorie map( DtoCategorie source );
+	Agrement map( DtoAgrement source );
 	
-	DtoCategorie map( Categorie source );
+	DtoAgrement map( Agrement source );
 
 	
 	// Personne
 	
-	Personne map( DtoPersonne source );
+	Personnel map( DtoPersonnel source );
 	
-	DtoPersonne map( Personne source );
+	DtoPersonnel map( Personnel source );
 
-	@Mapping( target="categorie", ignore = true )
-	@Mapping( target="telephones", ignore = true )
-	DtoPersonne mapMinimal( Personne source );
+	@Mapping( target="agrement", ignore = true )
+//	@Mapping( target="telephones", ignore = true )
+	DtoPersonnel mapMinimal( Personnel source );
 	
 	
 	// Telephone
 	
-	@Mapping( target="personne", ignore=true )
-	Telephone map( DtoTelephone source );
-	
-	DtoTelephone map( Telephone source );
+//	@Mapping( target="personne", ignore=true )
+//	Telephone map( DtoTelephone source );
+//	
+//	DtoTelephone map( Telephone source );
 	
 
 	// Méthodes auxiliaires
 	
-    @AfterMapping
-    public default void addBackReference(@MappingTarget Personne target) {
-        for (Telephone telephone : target.getTelephones() ) {
-        	telephone.setPersonne( target );
-        }
-    }	
+//    @AfterMapping
+//    public default void addBackReference(@MappingTarget Personnel target) {
+//        for (Telephone telephone : target.getTelephones() ) {
+//        	telephone.setPersonne( target );
+//        }
+//    }	
 	
 }

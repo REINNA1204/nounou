@@ -5,9 +5,9 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-import nounou.commun.dto.DtoCategorie;
+import nounou.commun.dto.DtoAgrement;
 import nounou.commun.dto.DtoCompte;
-import nounou.commun.dto.DtoPersonne;
+import nounou.commun.dto.DtoPersonnel;
 import nounou.commun.dto.DtoTelephone;
 import nounou.jsf.data.Categorie;
 import nounou.jsf.data.Compte;
@@ -32,18 +32,18 @@ public interface IMapper {
 
 	// Categorie
 	
-	Categorie    map( DtoCategorie source );
+	Categorie    map( DtoAgrement source );
 	
-	DtoCategorie map( Categorie source );
+	DtoAgrement map( Categorie source );
 	
 	Categorie duplicate( Categorie source );
 
 	
 	// Personne
 	
-	Personne    map( DtoPersonne source );
+	Personne    map( DtoPersonnel source );
 	
-	DtoPersonne map( Personne source );
+	DtoPersonnel map( Personne source );
 	
     Personne duplicate( Personne source );
 
