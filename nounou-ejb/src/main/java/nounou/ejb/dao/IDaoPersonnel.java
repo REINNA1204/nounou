@@ -7,16 +7,16 @@ import nounou.ejb.data.Personnel;
 
 public interface IDaoPersonnel {
 
-	int			inserer( Personnel personne );
+	int			inserer( Personnel personnel );
 
-	void 		modifier( Personnel personne );
+	void 		modifier( Personnel personnel );
 
-	void 		supprimer( int idPersonne );
+	void 		supprimer( int idPersonnel );
 
-	Personnel 	retrouver( int idPersonne );
+	Personnel 	retrouver( int idPersonnel );
 
 	List<Personnel> listerTout();
     
-    int 		compterPourCategorie( int idCategorie );
+    int 		compterPourAgrement( int idAgrement );
 
 }

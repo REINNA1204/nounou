@@ -10,6 +10,7 @@ public class DtoAgrement implements Serializable {
     
     private int         id;
     private String      libelle;
+    private int			nombremaxenfants;
 	
 	
 	// Constructeurs
@@ -18,10 +19,11 @@ public class DtoAgrement implements Serializable {
 		super();
 	}
     
-    public DtoAgrement(int id, String libelle) {
+    public DtoAgrement(int id, String libelle, int nombremaxenfants) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
+		this.nombremaxenfants = nombremaxenfants;
 	}
     
     
@@ -42,4 +44,13 @@ public class DtoAgrement implements Serializable {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
+
+	public int getNombremaxenfants() {
+		return nombremaxenfants;
+	}
+
+	public void setNombremaxenfants(int nombremaxenfants) {
+		this.nombremaxenfants = nombremaxenfants;
+	}
+    
 }

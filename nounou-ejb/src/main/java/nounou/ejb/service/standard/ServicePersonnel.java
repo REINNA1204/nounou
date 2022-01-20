@@ -2,7 +2,6 @@ package nounou.ejb.service.standard;
 
 import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
 import static nounou.commun.dto.Roles.ADMINISTRATEUR;
-import static nounou.commun.dto.Roles.UTILISATEUR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,40 +21,40 @@ import nounou.ejb.data.mapper.IMapperEjb;
 
 @Stateless
 @Remote
-@RolesAllowed({ ADMINISTRATEUR, UTILISATEUR })
+@RolesAllowed({ ADMINISTRATEUR })
 public class ServicePersonnel implements IServicePersonnel {
 
 	// Champs
 	@Inject
 	private IMapperEjb mapper;
 	@Inject
-	private IDaoPersonnel daoPersonne;
+	private IDaoPersonnel daoPersonnel;
 
 	// Actions
 
 	@Override
 	public int inserer(DtoPersonnel dtoPersonne) throws ExceptionValidation {
 		verifierValiditeDonnees(dtoPersonne);
-		int id = daoPersonne.inserer(mapper.map(dtoPersonne));
+		int id = daoPersonnel.inserer(mapper.map(dtoPersonne));
 		return id;
 	}
 
 	@Override
-	public void modifier(DtoPersonnel dtoPersonne) throws ExceptionValidation {
-		verifierValiditeDonnees(dtoPersonne);
-		daoPersonne.modifier(mapper.map(dtoPersonne));
+	public void modifier(DtoPersonnel dtoPersonnel) throws ExceptionValidation {
+		verifierValiditeDonnees(dtoPersonnel);
+		daoPersonnel.modifier(mapper.map(dtoPersonnel));
 	}
 
 	@Override
-	public void supprimer(int idPersonne) throws ExceptionValidation {
-		daoPersonne.supprimer(idPersonne);
+	public void supprimer(int idPersonnel) throws ExceptionValidation {
+		daoPersonnel.supprimer(idPersonnel);
 	}
 
 	@Override
 	@TransactionAttribute(NOT_SUPPORTED)
-	public DtoPersonnel retrouver(int idPersonne) {
-		Personnel personne = daoPersonne.retrouver(idPersonne);
-		return mapper.map(personne);
+	public DtoPersonnel retrouver(int idPersonnel) {
+		Personnel personnel = daoPersonnel.retrouver(idPersonnel);
+		return mapper.map(personnel);
 
 	}
 
@@ -63,27 +62,27 @@ public class ServicePersonnel implements IServicePersonnel {
 	@TransactionAttribute(NOT_SUPPORTED)
 	public List<DtoPersonnel> listerTout() {
 		List<DtoPersonnel> liste = new ArrayList<>();
-		for (Personnel personne : daoPersonne.listerTout()) {
-			liste.add( mapper.mapMinimal(personne) );
+		for (Personnel personnel : daoPersonnel.listerTout()) {
+			liste.add( mapper.mapMinimal(personnel) );
 		}
 		return liste;
 	}
 
 	// Méthodes auxiliaires
 
-	private void verifierValiditeDonnees(DtoPersonnel dtoPersonne) throws ExceptionValidation {
+	private void verifierValiditeDonnees(DtoPersonnel dtoPersonnel) throws ExceptionValidation {
 
 		StringBuilder message = new StringBuilder();
 
-		if (dtoPersonne.getNom() == null || dtoPersonne.getNom().isEmpty()) {
+		if (dtoPersonnel.getNom() == null || dtoPersonnel.getNom().isEmpty()) {
 			message.append("\nLe nom est absent.");
-		} else if (dtoPersonne.getNom().length() > 25) {
+		} else if (dtoPersonnel.getNom().length() > 25) {
 			message.append("\nLe nom est trop long.");
 		}
 
-		if (dtoPersonne.getPrenom() == null || dtoPersonne.getPrenom().isEmpty()) {
+		if (dtoPersonnel.getPrenom() == null || dtoPersonnel.getPrenom().isEmpty()) {
 			message.append("\nLe prénom est absent.");
-		} else if (dtoPersonne.getPrenom().length() > 25) {
+		} else if (dtoPersonnel.getPrenom().length() > 25) {
 			message.append("\nLe prénom est trop long.");
 		}
 

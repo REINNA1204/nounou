@@ -6,23 +6,35 @@
   <navigation-case>
    <from-outcome>connexion</from-outcome>
    <to-view-id>/connexion.xhtml</to-view-id>
-   <redirect />
-  </navigation-case>
-  <navigation-case>
-   <from-outcome>catégories</from-outcome>
-   <to-view-id>/pages/admin/categorie/liste.xhtml</to-view-id>
+   <redirect/>
   </navigation-case>
   <navigation-case>
    <from-outcome>comptes</from-outcome>
    <to-view-id>/pages/admin/compte/liste.xhtml</to-view-id>
   </navigation-case>
   <navigation-case>
-   <from-outcome>personnes</from-outcome>
-   <to-view-id>/pages/user/personne/liste.xhtml</to-view-id>
-  </navigation-case>
-  <navigation-case>
    <from-outcome>info</from-outcome>
    <to-view-id>/pages/info.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>personnels</from-outcome>
+   <to-view-id>/pages/admin/personnel/liste.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>agrements</from-outcome>
+   <to-view-id>/pages/admin/agrement/liste.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>parents</from-outcome>
+   <to-view-id>/pages/admin/parent/liste.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>contrats</from-outcome>
+   <to-view-id>/pages/admin/contrats/liste.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>suivi</from-outcome>
+   <to-view-id>/pages/admin/suivi/liste.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
  <application/>

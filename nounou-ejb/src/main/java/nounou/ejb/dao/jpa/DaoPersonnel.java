@@ -30,38 +30,37 @@ public class DaoPersonnel implements IDaoPersonnel {
 	// Actions
 	
 	@Override
-	public int inserer(Personnel personne) {
-		em.persist(personne);
+	public int inserer(Personnel personnel) {
+		em.persist(personnel);
 		em.flush();
-		return personne.getId();
+		return personnel.getId();
 	}
 
 	@Override
-	public void modifier(Personnel personne) {
-		em.merge( personne );
+	public void modifier(Personnel personnel) {
+		em.merge( personnel );
 	}
 
 	@Override
-	public void supprimer(int idPersonne) {
-		em.remove( retrouver(idPersonne) );
+	public void supprimer(int idPersonnel) {
+		em.remove( retrouver(idPersonnel) );
 	}
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public Personnel retrouver(int idPersonne) {
+	public Personnel retrouver(int idPersonnel) {
 		var graph = em.createEntityGraph( Personnel.class );
-		graph.addAttributeNodes( "categorie" );
-		graph.addAttributeNodes( "telephones" );
+		graph.addAttributeNodes( "agrement" );
 		var props = new HashMap<String, Object>();
 		props.put( "javax.persistence.loadgraph", graph );
-		return em.find( Personnel.class, idPersonne, props );
+		return em.find( Personnel.class, idPersonnel, props );
 	}
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
 	public List<Personnel> listerTout() {
 		em.clear();
-		var jpql = "SELECT p FROM Personne p ORDER BY p.nom, p.prenom";
+		var jpql = "SELECT p FROM Personnel p ORDER BY p.nom, p.prenom";
 		var query = em.createQuery( jpql, Personnel.class );
 		return query.getResultList();
 	}
@@ -69,10 +68,10 @@ public class DaoPersonnel implements IDaoPersonnel {
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public int compterPourCategorie(int idCategorie) {
-		var jpql = "SELECT COUNT(p) FROM Personne p WHERE p.categorie.id = :idCategorie";
+	public int compterPourAgrement(int idAgrement) {
+		var jpql = "SELECT COUNT(p) FROM Personnel p WHERE p.agrement.id = :idAgrement";
 		var query = em.createQuery( jpql, Long.class );
-		query.setParameter( "idCategorie", idCategorie );
+		query.setParameter( "idAgrement", idAgrement );
 		return query.getSingleResult().intValue();
 	}
 

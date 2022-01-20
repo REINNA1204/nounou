@@ -77,7 +77,7 @@ CREATE TABLE suivi (
 	HeureArrivee			TIME		NOT NULL,
 	HeureDepart			TIME		NOT NULL,
 	IsRepas			BOOLEAN			NOT NULL,
-	MontantJour				INT				NOT NULL,
+	MontantJour				DOUBLE PRECISION				NOT NULL,
 	IdContrat		INT				NOT NULL,
 	FOREIGN KEY (IdContrat) REFERENCES contrat (IdContrat),
 	PRIMARY KEY (IdSuivi)

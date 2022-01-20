@@ -11,10 +11,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import nounou.commun.dto.Roles;
-import nounou.jsf.data.Categorie;
+import nounou.jsf.data.Agrement;
 import nounou.jsf.data.Compte;
-import nounou.jsf.data.Personne;
-import nounou.jsf.data.Telephone;
+import nounou.jsf.data.Contrat;
+import nounou.jsf.data.Parent;
+import nounou.jsf.data.Personnel;
+import nounou.jsf.data.Suivi;
 import nounou.jsf.data.mapper.IMapper;
 
 
@@ -26,10 +28,13 @@ public class Donnees implements Serializable {
     // Champs 
 
     private final Map<Integer, Compte>  	mapComptes 		= new HashMap<>();
-	private final Map<Integer, Categorie>	mapCategories 	= new HashMap<>();
-	private final Map<Integer, Personne>	mapPersonnes	= new HashMap<>();
+	private final Map<Integer, Agrement>	mapAgrements 	= new HashMap<>();
+	private final Map<Integer, Personnel>	mapPersonnels	= new HashMap<>();
+	private final Map<Integer, Parent>		mapParents  	= new HashMap<>();
+	private final Map<Integer, Contrat>		mapContrats  	= new HashMap<>();
+	private final Map<Integer, Suivi>		mapSuivis  	= new HashMap<>();
 
-	private int 	dernierIdTelephone;
+	//private int 	dernierIdTelephone;
 	
 	@Inject
 	private IMapper	mapper;
@@ -37,12 +42,12 @@ public class Donnees implements Serializable {
 	
 	// Getters
 	
-	public List<Categorie> getCategories() {
-		List<Categorie> categories = new ArrayList<>();
-		for ( Categorie categorie : mapCategories.values() ) {
-			categories.add( mapper.duplicate( categorie ) );
+	public List<Agrement> getAgrements() {
+		List<Agrement> agrements = new ArrayList<>();
+		for ( Agrement agrement : mapAgrements.values() ) {
+			agrements.add( mapper.duplicate( agrement ) );
 		}
-		return categories;
+		return agrements;
 	}
 	
 	public List<Compte> getComptes() {
@@ -53,12 +58,36 @@ public class Donnees implements Serializable {
 		return comptes;
 	}
 	
-	public List<Personne> getPersonnes() {
-		List<Personne> personnes = new ArrayList<>();
-		for ( Personne personne : mapPersonnes.values() ) {
-			personnes.add( mapper.duplicate( personne ) );
+	public List<Personnel> getPersonnels() {
+		List<Personnel> personnels = new ArrayList<>();
+		for ( Personnel personnel : mapPersonnels.values() ) {
+			personnels.add( mapper.duplicate( personnel ) );
 		}
-		return personnes;
+		return personnels;
+	}
+	
+	public List<Parent> getParents() {
+		List<Parent> parents = new ArrayList<>();
+		for ( Parent parent : mapParents.values() ) {
+			parents.add( mapper.duplicate( parent ) );
+		}
+		return parents;
+	}
+	
+	public List<Contrat> getContrats() {
+		List<Contrat> contrats = new ArrayList<>();
+		for ( Contrat contrat : mapContrats.values() ) {
+			contrats.add( mapper.duplicate( contrat ) );
+		}
+		return contrats;
+	}
+	
+	public List<Suivi> getSuivis() {
+		List<Suivi> suivis = new ArrayList<>();
+		for ( Suivi suivi : mapSuivis.values() ) {
+			suivis.add( mapper.duplicate( suivi ) );
+		}
+		return suivis;
 	}
 	
 	
@@ -71,23 +100,23 @@ public class Donnees implements Serializable {
 	
 	// Actions
 	
-	public int categorieAjouter( Categorie categorie ) {
-		Integer idMax = Collections.max( mapCategories.keySet() );
+	public int agrementAjouter( Agrement agrement ) {
+		Integer idMax = Collections.max( mapAgrements.keySet() );
 		if ( idMax == null ) {
 			idMax = 0;
 		}
-		categorie.setId( idMax + 1 );
-		mapCategories.put( categorie.getId(), mapper.duplicate( categorie ) );
-		return categorie.getId();
+		agrement.setId( idMax + 1 );
+		mapAgrements.put( agrement.getId(), mapper.duplicate( agrement ) );
+		return agrement.getId();
 	}
-	public void categorieModifier( Categorie categorie ) {
-		mapCategories.replace( categorie.getId(), mapper.duplicate( categorie ) );
+	public void agrementModifier( Agrement agrement ) {
+		mapAgrements.replace( agrement.getId(), mapper.duplicate( agrement ) );
 	}
-	public void categorieSupprimer( int id ) {
-		mapCategories.remove( id );
+	public void agrementSupprimer( int id ) {
+		mapAgrements.remove( id );
 	}
-	public Categorie categorieRetrouver( int id ) {
-		return mapper.duplicate( mapCategories.get( id ) );
+	public Agrement agrementRetrouver( int id ) {
+		return mapper.duplicate( mapAgrements.get( id ) );
 	}
 	
 	public int compteAjouter( Compte compte ) {
@@ -109,25 +138,81 @@ public class Donnees implements Serializable {
 		return mapper.duplicate( mapComptes.get( id ) );
 	}
 	
-	public int personneAjouter( Personne personne ) {
-		Integer idMax = Collections.max( mapPersonnes.keySet() );
+	public int personnelAjouter( Personnel personnel ) {
+		Integer idMax = Collections.max( mapPersonnels.keySet() );
 		if ( idMax == null ) {
 			idMax = 0;
 		}
-		personne.setId( idMax + 1 );
-		affecterIdTelephones(personne);
-		mapPersonnes.put( personne.getId(), mapper.duplicate( personne ) );
-		return personne.getId();
+		personnel.setId( idMax + 1 );
+		//affecterIdTelephones(personne);
+		mapPersonnels.put( personnel.getId(), mapper.duplicate( personnel ) );
+		return personnel.getId();
 	}
-	public void personneModifier( Personne personne ) {
-		affecterIdTelephones(personne);
-		mapPersonnes.replace( personne.getId(), mapper.duplicate( personne ) );
+	public void personnelModifier( Personnel personnel ) {
+		mapPersonnels.replace( personnel.getId(), mapper.duplicate( personnel ) );
 	}
-	public void personneSupprimer( int id ) {
-		mapPersonnes.remove( id );
+	public void personnelSupprimer( int id ) {
+		mapPersonnels.remove( id );
 	}
-	public Personne personneRetrouver( int id ) {
-		return mapper.duplicate( mapPersonnes.get( id ) );
+	public Personnel personnelRetrouver( int id ) {
+		return mapper.duplicate( mapPersonnels.get( id ) );
+	}
+	
+	public int parentAjouter( Parent parent ) {
+		Integer idMax = Collections.max( mapParents.keySet() );
+		if ( idMax == null ) {
+			idMax = 0;
+		}
+		parent.setId( idMax + 1 );
+		mapParents.put( parent.getId(), mapper.duplicate( parent ) );
+		return parent.getId();
+	}
+	public void parentModifier( Parent parent ) {
+		mapParents.replace( parent.getId(), mapper.duplicate( parent ) );
+	}
+	public void parentSupprimer( int id ) {
+		mapParents.remove( id );
+	}
+	public Parent parentRetrouver( int id ) {
+		return mapper.duplicate( mapParents.get( id ) );
+	}
+	
+	public int contratAjouter( Contrat contrat ) {
+		Integer idMax = Collections.max( mapContrats.keySet() );
+		if ( idMax == null ) {
+			idMax = 0;
+		}
+		contrat.setId( idMax + 1 );
+		mapContrats.put( contrat.getId(), mapper.duplicate( contrat ) );
+		return contrat.getId();
+	}
+	public void contratModifier( Contrat contrat ) {
+		mapContrats.replace( contrat.getId(), mapper.duplicate( contrat ) );
+	}
+	public void contratSupprimer( int id ) {
+		mapContrats.remove( id );
+	}
+	public Contrat contratRetrouver( int id ) {
+		return mapper.duplicate( mapContrats.get( id ) );
+	}
+	
+	public int suiviAjouter( Suivi suivi ) {
+		Integer idMax = Collections.max( mapSuivis.keySet() );
+		if ( idMax == null ) {
+			idMax = 0;
+		}
+		suivi.setId( idMax + 1 );
+		mapSuivis.put( suivi.getId(), mapper.duplicate( suivi ) );
+		return suivi.getId();
+	}
+	public void suiviModifier( Suivi suivi ) {
+		mapSuivis.replace( suivi.getId(), mapper.duplicate( suivi ) );
+	}
+	public void suiviSupprimer( int id ) {
+		mapSuivis.remove( id );
+	}
+	public Suivi suiviRetrouver( int id ) {
+		return mapper.duplicate( mapSuivis.get( id ) );
 	}
 
 	
@@ -157,51 +242,13 @@ public class Donnees implements Serializable {
 		mapComptes.put( compte.getId(), compte );
 
 		
-		// Catégories
+		// Agréments
 	
-		Categorie categorie;
-		categorie =  new Categorie( 1, "Ecrivains" );
-    	mapCategories.put( categorie.getId(), categorie );
-    	categorie =  new Categorie( 2, "Peintres" );
-    	mapCategories.put( categorie.getId(), categorie );
-
-    	
-    	// Personnes
-    	
-    	Categorie categorie1 = mapCategories.get(1);
-
-        Personne personne;
-
-        personne = new Personne( 1, "VERLAINE", "Paul", categorie1 );
-        personne.getTelephones().add(new Telephone(31, "Portable", "06 33 33 33 33"));
-        personne.getTelephones().add(new Telephone(32, "Domicile", "05 55 33 33 33"));
-        personne.getTelephones().add(new Telephone(33, "Travail", "05 55 99 33 33"));
-        mapPersonnes.put(personne.getId(), personne);
-
-        personne = new Personne( 2, "HUGO", "Victor", categorie1 );
-        personne.getTelephones().add(new Telephone(11, "Portable", "06 11 11 11 11"));
-        personne.getTelephones().add(new Telephone(12, "Domicile", "05 55 11 11 11"));
-        personne.getTelephones().add(new Telephone(13, "Travail", "05 55 99 11 11"));
-        mapPersonnes.put(personne.getId(), personne);
-
-        personne = new Personne( 3, "TRIOLET", "Elsa", categorie1 );
-        personne.getTelephones().add(new Telephone(21, "Portable", "06 22 22 22 22"));
-        personne.getTelephones().add(new Telephone(22, "Domicile", "05 55 22 22 22"));
-        personne.getTelephones().add(new Telephone(23, "Travail", "05 55 99 22 22"));
-        mapPersonnes.put(personne.getId(), personne);
-        
-        dernierIdTelephone = 100;
+		Agrement agrement;
+		agrement =  new Agrement( 1, "CTA-2", 10 );
+		mapAgrements.put( agrement.getId(), agrement );
+		agrement =  new Agrement( 2, "CTA-3", 15 );
+    	mapAgrements.put( agrement.getId(), agrement );
 	
 	}
-	
-    
-	private void affecterIdTelephones( Personne personne ) {
-		for( Telephone t : personne.getTelephones() ) {
-			if ( t.getId() == 0 ) {
-				t.setId( ++dernierIdTelephone );
-			}
-		}
-	}
-	
-	
 }

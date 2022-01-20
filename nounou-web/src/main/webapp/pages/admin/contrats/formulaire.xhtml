@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/template/page-standard.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{modelContrat.courant.id}" />
+		<f:viewAction action="#{modelContrat.actualiserCourant()}" />
+	</f:metadata>
+
+	<ui:define name="titre">Contrat (Enfant)</ui:define>
+
+	<ui:define name="contenu">
+
+		<h:form>
+			<table class="form">
+				<tr>
+					<td><h:outputLabel for="id">Id :</h:outputLabel></td>
+					<td>
+						<h:inputText id="id" size="5" readonly="true"
+								value="#{modelContrat.courant.id}" /> <br />
+						<h:message for="id" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="nom">Nom enfant :</h:outputLabel></td>
+					<td>
+						<h:inputText id="nom" size="25"
+								value="#{modelContrat.courant.nomenfant}" /> <br />
+						<h:message for="nom" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="prenom">Prénom enfant:</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="prenom" size="25"
+								value="#{modelContrat.courant.prenomenfant}" /> <br />
+						<h:message for="prenom" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="datenaissance">Date de naissance :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="datenaissance" size="15"
+								value="#{modelContrat.courant.datenaissanceenfant}"
+								a:placeholder="jj/mm/aaaa"> 
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+						</h:inputText><br />
+						<h:message for="datenaissance" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="datedebut">Date début contrat :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="datedebut" size="15"
+								value="#{modelContrat.courant.datedebut}" 
+								a:placeholder="jj/mm/aaaa">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/> 
+						</h:inputText><br />
+						<h:message for="datedebut" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="datefin">Date fin contrat :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="datefin" size="15" value="#{modelContrat.courant.datefin}" a:placeholder="jj/mm/aaaa"> 
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+						</h:inputText><br />
+						<h:message for="datefin" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="tarifhoraire">Tarif horaire :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="tarifhoraire" size="10" value="#{modelContrat.courant.tarifhoraire}"> 
+								<f:validateBean disabled="true" /> 
+								<f:validateDoubleRange minimum="0" /> 
+								<f:convertNumber pattern="#,##0.00" /> 
+						</h:inputText> € <br />
+						<h:message for="tarifhoraire" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="parent">Parent :</h:outputLabel></td>
+					<td>
+						<h:selectOneMenu id="parent"
+								value="#{modelContrat.courant.parent}"
+								converter="#{converterGetId}">
+								<f:selectItems value="#{modelParent.liste}" />
+						</h:selectOneMenu> <br />
+						<h:message for="parent" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="personnel">Personnel :</h:outputLabel></td>
+					<td>
+						<h:selectOneMenu id="personnel"
+								value="#{modelContrat.courant.personnel}"
+								converter="#{converterGetId}">
+								<f:selectItems value="#{modelPersonnel.liste}" />
+						</h:selectOneMenu> <br />
+						<h:message for="personnel" errorClass="error" />
+					</td>
+				</tr>
+			</table>
+
+			<br />
+
+
+			<br />
+			<h:commandButton value="Valider"
+				action="#{modelContrat.validerMiseAJour()}">
+			</h:commandButton>
+			<h:button value="Retour" outcome="contrats" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

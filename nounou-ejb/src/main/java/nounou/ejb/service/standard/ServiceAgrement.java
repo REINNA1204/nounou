@@ -30,38 +30,38 @@ public class ServiceAgrement implements IServiceAgrement {
 	@Inject
 	private IMapperEjb mapper;
 	@Inject
-	private IDaoAgrement daoCategorie;
+	private IDaoAgrement daoAgrement;
 	@Inject
-	private IDaoPersonnel daoPersonne;
+	private IDaoPersonnel daoPersonnel;
 
 	// Actions
 
 	@Override
-	public int inserer(DtoAgrement dtoCategorie) throws ExceptionValidation {
-		verifierValiditeDonnees(dtoCategorie);
-		int id = daoCategorie.inserer(mapper.map(dtoCategorie));
+	public int inserer(DtoAgrement dtoAgrement) throws ExceptionValidation {
+		verifierValiditeDonnees(dtoAgrement);
+		int id = daoAgrement.inserer(mapper.map(dtoAgrement));
 		return id;
 	}
 
 	@Override
-	public void modifier(DtoAgrement dtoCategorie) throws ExceptionValidation {
-		verifierValiditeDonnees(dtoCategorie);
-		daoCategorie.modifier(mapper.map(dtoCategorie));
+	public void modifier(DtoAgrement dtoAgrement) throws ExceptionValidation {
+		verifierValiditeDonnees(dtoAgrement);
+		daoAgrement.modifier(mapper.map(dtoAgrement));
 	}
 
 	@Override
-	public void supprimer(int idCategorie) throws ExceptionValidation {
-		if (daoPersonne.compterPourCategorie(idCategorie) != 0) {
-			throw new ExceptionValidation("La catégorie n'est pas vide");
+	public void supprimer(int idAgrement) throws ExceptionValidation {
+		if (daoPersonnel.compterPourAgrement(idAgrement) != 0) {
+			throw new ExceptionValidation("L'agrément n'est pas vide");
 		}
-		daoCategorie.supprimer(idCategorie);
+		daoAgrement.supprimer(idAgrement);
 	}
 
 	@Override
 	@RolesAllowed({ ADMINISTRATEUR, UTILISATEUR })
 	@TransactionAttribute(NOT_SUPPORTED)
-	public DtoAgrement retrouver(int idCategorie) {
-		return mapper.map(daoCategorie.retrouver(idCategorie));
+	public DtoAgrement retrouver(int idAgrement) {
+		return mapper.map(daoAgrement.retrouver(idAgrement));
 	}
 
 	@Override
@@ -69,24 +69,28 @@ public class ServiceAgrement implements IServiceAgrement {
 	@TransactionAttribute(NOT_SUPPORTED)
 	public List<DtoAgrement> listerTout() {
 		List<DtoAgrement> liste = new ArrayList<>();
-		for (Agrement categorie : daoCategorie.listerTout()) {
-			liste.add(mapper.map(categorie));
+		for (Agrement agrement : daoAgrement.listerTout()) {
+			liste.add(mapper.map(agrement));
 		}
 		return liste;
 	}
 
 	// Méthodes auxiliaires
 
-	private void verifierValiditeDonnees(DtoAgrement dtoCategorie) throws ExceptionValidation {
+	private void verifierValiditeDonnees(DtoAgrement dtoAgrement) throws ExceptionValidation {
 
 		StringBuilder message = new StringBuilder();
 
-		if (dtoCategorie.getLibelle() == null || dtoCategorie.getLibelle().isEmpty()) {
+		if (dtoAgrement.getLibelle() == null || dtoAgrement.getLibelle().isEmpty()) {
 			message.append("\nLe libellé est absent.");
-		} else if (dtoCategorie.getLibelle().length() < 3) {
+		} else if (dtoAgrement.getLibelle().length() < 3) {
 			message.append("\nLe libellé est trop court.");
-		} else if (dtoCategorie.getLibelle().length() > 25) {
+		} else if (dtoAgrement.getLibelle().length() > 25) {
 			message.append("\nLe libellé est trop long.");
+		}
+		
+		if (dtoAgrement.getNombremaxenfants() == 0 || dtoAgrement.getNombremaxenfants() < 0) {
+			message.append("\nLe nombre max d'enfants autorisé pour cet agrément  est absent ou invalide.");
 		}
 
 		if (message.length() > 0) {

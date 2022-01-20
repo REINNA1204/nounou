@@ -5,7 +5,6 @@
 		<class>nounou.ejb.data.Agrement</class>
 		<class>nounou.ejb.data.Compte</class>
 		<class>nounou.ejb.data.Personnel</class>
-		<class>nounou.ejb.data.Telephone</class>
 		<properties>
 			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.format_sql" value="true"/>

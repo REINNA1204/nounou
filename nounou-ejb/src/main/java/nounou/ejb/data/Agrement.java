@@ -23,9 +23,8 @@ public class Agrement {
 	@Column( name = "libelle" )
     private String      	libelle;
 	
-	@Column( name = "nombremaxenfants" )
+	@Column( name = "nombremaxenfant" )
     private int      	nombremaxenfants;
-	
 	
 	// Constructeurs
 
@@ -70,7 +69,7 @@ public class Agrement {
 	// soString()
     @Override
     public String toString() {
-    	return libelle;
+    	return this.libelle;
     }
 
     

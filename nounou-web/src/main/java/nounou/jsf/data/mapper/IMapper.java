@@ -1,18 +1,20 @@
 package nounou.jsf.data.mapper;
 
-import java.util.List;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 import nounou.commun.dto.DtoAgrement;
 import nounou.commun.dto.DtoCompte;
+import nounou.commun.dto.DtoContrat;
+import nounou.commun.dto.DtoParent;
 import nounou.commun.dto.DtoPersonnel;
-import nounou.commun.dto.DtoTelephone;
-import nounou.jsf.data.Categorie;
+import nounou.commun.dto.DtoSuivi;
+import nounou.jsf.data.Agrement;
 import nounou.jsf.data.Compte;
-import nounou.jsf.data.Personne;
-import nounou.jsf.data.Telephone;
+import nounou.jsf.data.Contrat;
+import nounou.jsf.data.Parent;
+import nounou.jsf.data.Personnel;
+import nounou.jsf.data.Suivi;
 
 
 @Mapper( componentModel = "cdi" )
@@ -30,34 +32,45 @@ public interface IMapper {
 	Compte update( @MappingTarget Compte target, Compte source );
 
 
-	// Categorie
+	// Agrement
 	
-	Categorie    map( DtoAgrement source );
+	Agrement    map( DtoAgrement source );
 	
-	DtoAgrement map( Categorie source );
+	DtoAgrement map( Agrement source );
 	
-	Categorie duplicate( Categorie source );
+	Agrement duplicate( Agrement source );
 
 	
 	// Personne
 	
-	Personne    map( DtoPersonnel source );
+	Personnel    map( DtoPersonnel source );
 	
-	DtoPersonnel map( Personne source );
+	DtoPersonnel map( Personnel source );
 	
-    Personne duplicate( Personne source );
-
+    Personnel duplicate( Personnel source );
+    
+	// Parent
 	
-	// Telephone
+	Parent    map( DtoParent source );
 	
-	Telephone    map( DtoTelephone source );
+	DtoParent map( Parent source );
 	
-	DtoTelephone map( Telephone source );
-
-    // Méthodes nécessaire pour update( Personne )
-
-	Telephone duplicate( Telephone source );
-
-	List<Telephone> duplicate( List<Telephone> source );
+    Parent duplicate( Parent source );
+    
+	// Contrat
+	
+	Contrat    map( DtoContrat source );
+	
+	DtoContrat map( Contrat source );
+	
+	Contrat duplicate( Contrat source );
+	
+	// Suivi
+	
+	Suivi    map( DtoSuivi source );
+	
+	DtoSuivi map( Suivi source );
+	
+	Suivi duplicate( Suivi source );
 
 }

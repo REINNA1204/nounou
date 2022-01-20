@@ -41,15 +41,6 @@
 					title="Modifier" 
 					styleClass="image-action"
 				/>
-				<h:commandButton action="#{modelCompte.supprimer(item)}" 
-					value="Supprimer" 
-					onclick="return confirm('Confirmez-vous la suppression ?')" 
-					image="#{ resource['images:supprimer.png'] }" 
-					title="Supprimer"
-					styleClass="image-action"
-				>
-					<f:ajax render="@form" execute="@form" />				
-				</h:commandButton>
 			</h:column>
 			
 		</h:dataTable>

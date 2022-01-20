@@ -21,13 +21,15 @@ public class DtoPersonnel implements Serializable {
 	
 	private DtoAgrement	agrement;
 	
+	private DtoCompte compte;
+	
 	
 	// Constructeurs
 	
 	public DtoPersonnel() {
 	}
 
-	public DtoPersonnel(int id, String nom, String prenom, String telephone, String adresse, DtoAgrement agrement ) {
+	public DtoPersonnel(int id, String nom, String prenom, String telephone, String adresse, DtoAgrement agrement) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -88,5 +90,15 @@ public class DtoPersonnel implements Serializable {
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+
+	public DtoCompte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(DtoCompte compte) {
+		this.compte = compte;
+	}
+	
+	
 
 }

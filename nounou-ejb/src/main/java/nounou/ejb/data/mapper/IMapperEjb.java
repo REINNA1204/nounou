@@ -6,10 +6,16 @@ import org.mapstruct.factory.Mappers;
 
 import nounou.commun.dto.DtoAgrement;
 import nounou.commun.dto.DtoCompte;
+import nounou.commun.dto.DtoContrat;
+import nounou.commun.dto.DtoParent;
 import nounou.commun.dto.DtoPersonnel;
+import nounou.commun.dto.DtoSuivi;
 import nounou.ejb.data.Agrement;
 import nounou.ejb.data.Compte;
+import nounou.ejb.data.Contrat;
+import nounou.ejb.data.Parent;
 import nounou.ejb.data.Personnel;
+import nounou.ejb.data.Suivi;
 
  
 @Mapper( componentModel = "cdi" )
@@ -32,32 +38,32 @@ public interface IMapperEjb {
 	DtoAgrement map( Agrement source );
 
 	
-	// Personne
+	// Personnel
 	
 	Personnel map( DtoPersonnel source );
 	
 	DtoPersonnel map( Personnel source );
 
-	@Mapping( target="agrement", ignore = true )
-//	@Mapping( target="telephones", ignore = true )
+	//@Mapping( target="agrement", ignore = true )
 	DtoPersonnel mapMinimal( Personnel source );
 	
+	// Parent
 	
-	// Telephone
+	Parent map( DtoParent source );
 	
-//	@Mapping( target="personne", ignore=true )
-//	Telephone map( DtoTelephone source );
-//	
-//	DtoTelephone map( Telephone source );
+	DtoParent map( Parent source );
 	
-
-	// Méthodes auxiliaires
+	// Contrat
 	
-//    @AfterMapping
-//    public default void addBackReference(@MappingTarget Personnel target) {
-//        for (Telephone telephone : target.getTelephones() ) {
-//        	telephone.setPersonne( target );
-//        }
-//    }	
+	Contrat map( DtoContrat source );
+	@Mapping( target="personnel", ignore = true )
+	@Mapping( target="parent", ignore = false )
+	DtoContrat map(Contrat source);
+	
+	// Suici
+	
+	Suivi map( DtoSuivi source );
+	
+	DtoSuivi map(Suivi source);
 	
 }

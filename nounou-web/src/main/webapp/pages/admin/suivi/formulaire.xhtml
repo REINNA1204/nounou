@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/template/page-standard.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{modelSuivi.courant.id}" />
+		<f:viewAction action="#{modelSuivi.actualiserCourant()}" />
+	</f:metadata>
+
+	<ui:define name="titre">Suivi de garde</ui:define>
+
+	<ui:define name="contenu">
+
+		<h:form>
+			<table class="form">
+				<tr>
+					<td><h:outputLabel for="id">Id :</h:outputLabel></td>
+					<td>
+						<h:inputText id="id" size="5" readonly="true"
+								value="#{modelSuivi.courant.id}" /> <br />
+						<h:message for="id" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="datejour">Date du jour :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="datejour" size="15"
+								value="#{modelSuivi.courant.datedujour}"
+								a:placeholder="jj/mm/aaaa"> 
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+						</h:inputText><br />
+						<h:message for="datejour" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="heurearrivee">Heure d'arrivée :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="heurearrivee" size="15"
+								value="#{modelSuivi.courant.heurearrivee}" 
+								a:placeholder="jj/mm/aaaa">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/> 
+						</h:inputText><br />
+						<h:message for="heurearrivee" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="heuredepart">Heure de départ :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="heuredepart" size="15" value="#{modelSuivi.courant.heuredepart}" a:placeholder="jj/mm/aaaa"> 
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+						</h:inputText><br />
+						<h:message for="heuredepart" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="montantdujour">Montant du jour :</h:outputLabel>
+					</td>
+					<td>
+						<h:inputText id="montantdujour" size="10" value="#{modelSuivi.courant.montantjour}"> 
+								<f:validateBean disabled="true" /> 
+								<f:validateDoubleRange minimum="0" /> 
+								<f:convertNumber pattern="#,##0.00" /> 
+						</h:inputText> € <br />
+						<h:message for="montantdujour" errorClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="contrat">Enfant :</h:outputLabel></td>
+					<td>
+						<h:selectOneMenu id="contrat"
+								value="#{modelSuivi.courant.contrat}"
+								converter="#{converterGetId}">
+								<f:selectItems value="#{modelcontrat.liste}" />
+						</h:selectOneMenu> <br />
+						<h:message for="contrat" errorClass="error" />
+					</td>
+				</tr>
+			</table>
+
+			<br />
+
+
+			<br />
+			<h:commandButton value="Valider"
+				action="#{modelContrat.validerMiseAJour()}">
+			</h:commandButton>
+			<h:button value="Retour" outcome="contrats" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

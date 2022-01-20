@@ -30,33 +30,33 @@ public class DaoAgrement implements IDaoAgrement {
 	// Actions
 	
 	@Override
-	public int inserer(Agrement categorie) {
-		em.persist(categorie);
+	public int inserer(Agrement agrement) {
+		em.persist(agrement);
 		em.flush();
-		return categorie.getId();
+		return agrement.getId();
 	}
 
 	@Override
-	public void modifier(Agrement categorie) {
-		em.merge( categorie );
+	public void modifier(Agrement agrement) {
+		em.merge( agrement );
 	}
 
 	@Override
-	public void supprimer(int idCategorie) {
-		em.remove( retrouver(idCategorie) );
+	public void supprimer(int idAgrement) {
+		em.remove( retrouver(idAgrement) );
 	}
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
-	public Agrement retrouver(int idCategorie) {
-		return em.find( Agrement.class, idCategorie );
+	public Agrement retrouver(int idAgrement) {
+		return em.find( Agrement.class, idAgrement );
 	}
 
 	@Override
 	@TransactionAttribute( NOT_SUPPORTED )
 	public List<Agrement> listerTout() {
 		em.clear();
-		var jpql = "SELECT c FROM Categorie c ORDER BY c.libelle";
+		var jpql = "SELECT a FROM Agrement a ORDER BY a.libelle";
 		var query = em.createQuery( jpql, Agrement.class );
 		return query.getResultList();
 	}

@@ -5,7 +5,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,7 +22,7 @@ public class Personnel {
 	
 	@Id
 	@GeneratedValue( strategy = IDENTITY )
-	@Column( name = "idpersonne" )
+	@Column( name = "idpersonnel" )
 	private int				id;
 	
 	@Column( name = "nom" )
@@ -38,17 +37,13 @@ public class Personnel {
 	@Column( name = "adresse" )
 	private String			adresse;
 	
-	@ManyToOne( fetch = FetchType.LAZY )
+	@ManyToOne
 	@JoinColumn( name = "idagrement" )
 	private Agrement		agrement;
 
 	@OneToOne( cascade = CascadeType.ALL ) 
     @JoinColumn( name="idcompte" )
     private Compte compte;
-	
-//	@OneToMany( mappedBy = "personne", cascade = ALL, orphanRemoval = true  )
-//	@OrderBy( "libelle" )
-//	private List<Telephone>	telephones = new ArrayList<>();
 	
 	
 	// Constructeurs

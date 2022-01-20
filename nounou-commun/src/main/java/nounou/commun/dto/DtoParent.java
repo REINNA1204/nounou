@@ -19,6 +19,8 @@ public class DtoParent implements Serializable {
 	
 	private String			adresse;
 	
+	private DtoCompte compte;
+	
 	
 	// Constructeurs
 	
@@ -78,6 +80,12 @@ public class DtoParent implements Serializable {
 		this.adresse = adresse;
 	}
 
-	
+	public DtoCompte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(DtoCompte compte) {
+		this.compte = compte;
+	}
 
 }
